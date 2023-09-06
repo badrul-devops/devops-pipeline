@@ -17,16 +17,16 @@ pipeline{
 
     // }
     stages{
-        stage("Cleanup Workspace"){
-            steps {
-                cleanWs()
-            }
+        // stage("Cleanup Workspace"){
+        //     steps {
+        //         cleanWs()
+        //     }
 
-        }
+        // }
     
         stage("Checkout from SCM"){
             steps {
-                git branch: 'master', credentialsId: , url: 'https://github.com/badrul-devops/devops-pipeline'
+                git branch: 'master', credentialsId: '' , url: 'https://github.com/badrul-devops/devops-pipeline'
             }
 
         }
