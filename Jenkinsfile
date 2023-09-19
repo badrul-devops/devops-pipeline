@@ -43,16 +43,16 @@ pipeline{
 
         }
         
-        stage("Sonarqube Analysis") {
-            steps {
-                script {
-                    withSonarQubeEnv(credentialsId: 'sonar') {
-                        sh "mvn sonar:sonar"
-                    }
-                }
-            }
+        // stage("Sonarqube Analysis") {
+        //     steps {
+        //         script {
+        //             withSonarQubeEnv(credentialsId: 'sonar') {
+        //                 sh "mvn sonar:sonar"
+        //             }
+        //         }
+        //     }
 
-        }
+        // }
 
         stage("Build & Push Docker Image") {
             steps {
@@ -70,14 +70,14 @@ pipeline{
 
         }
 
-        stage("Trivy Scan") {
-            steps {
-                script {
-		   sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${DOCKER_USER}/${IMAGE_NAME}:latest--no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
-                }
-            }
+        // stage("Trivy Scan") {
+        //     steps {
+        //         script {
+		//    sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image ${DOCKER_USER}/${IMAGE_NAME}:latest--no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
+        //         }
+        //     }
 
-        }
+        // }
 
         stage ('Cleanup Artifacts') {
             steps {
@@ -87,7 +87,10 @@ pipeline{
                 }
             }
         }
-
-
+        // stage('Trigger ManifestUpdate'){
+        //     steps{
+        //         build job: 'ManifestUpdate'
+        //     }
+        // }
     }
 }
