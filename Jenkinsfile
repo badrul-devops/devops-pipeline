@@ -65,7 +65,7 @@ pipeline{
                     // docker.withRegistry('',DOCKER_PASS) {
                     //     docker_image.push("${IMAGE_TAG}")
                     //     docker_image.push('latest')
-                    }
+                   // }
                 }
             }
 
@@ -93,5 +93,5 @@ pipeline{
         //         build job: 'ManifestUpdate'
         //     }
         // }
-    }
+    //}
 }
