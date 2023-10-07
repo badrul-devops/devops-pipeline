@@ -1,19 +1,19 @@
 pipeline{
     agent any
     tools {
-        jdk 'java'
+        // jdk 'java'
         maven 'maven'
     }
-    environment {
-        APP_NAME = "devops-pipeline"
-        RELEASE = "1.0.0"
-        DOCKER_USER = "badrul11"
-        DOCKER_PASS = 'dockerhub'
-        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
-        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
-        // JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
+    // environment {
+    //     APP_NAME = "devops-pipeline"
+    //     RELEASE = "1.0.0"
+    //     DOCKER_USER = "badrul11"
+    //     DOCKER_PASS = 'dockerhub'
+    //     IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+    //     IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+    //     // JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
 
-    }
+    // }
     stages{
         stage("Cleanup Workspace"){
             steps {
@@ -57,13 +57,14 @@ pipeline{
         stage("Build & Push Docker Image") {
             steps {
                 script {
-                    docker.withRegistry('',DOCKER_PASS) {
-                        docker_image = docker.build "${IMAGE_NAME}"
+			sh 'docker build -t badrul11/demo11 .'
+                    // docker.withRegistry('',DOCKER_PASS) {
+                    //     docker_image = docker.build "${IMAGE_NAME}"
                     }
 
-                    docker.withRegistry('',DOCKER_PASS) {
-                        docker_image.push("${IMAGE_TAG}")
-                        docker_image.push('latest')
+                    // docker.withRegistry('',DOCKER_PASS) {
+                    //     docker_image.push("${IMAGE_TAG}")
+                    //     docker_image.push('latest')
                     }
                 }
             }
@@ -79,14 +80,14 @@ pipeline{
 
         // }
 
-        stage ('Cleanup Artifacts') {
-            steps {
-                script {
-                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker rmi ${IMAGE_NAME}:latest"
-                }
-            }
-        }
+        // stage ('Cleanup Artifacts') {
+        //     steps {
+        //         script {
+        //             sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+        //             sh "docker rmi ${IMAGE_NAME}:latest"
+        //         }
+        //     }
+        // }
         // stage('Trigger ManifestUpdate'){
         //     steps{
         //         build job: 'ManifestUpdate'
