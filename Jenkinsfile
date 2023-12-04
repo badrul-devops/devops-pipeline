@@ -27,47 +27,47 @@ pipeline{
                 git branch: 'master', credentialsId: '' , url: 'https://github.com/badrul-devops/devops-pipeline'
             }
 
-        }
+         }
 
-        stage("Build Application"){
-            steps {
-                sh "mvn clean package"
-            }
-
-        }
-
-        stage("Test Application"){
-            steps {
-                sh "mvn test"
-            }
-
-        }
-        
-        // stage("Sonarqube Analysis") {
+        // stage("Build Application"){
         //     steps {
-        //         script {
-        //             withSonarQubeEnv(credentialsId: 'sonar') {
-        //                 sh "mvn sonar:sonar"
-        //             }
-        //         }
+        //         sh "mvn clean package"
         //     }
 
         // }
 
-        stage("Build & Push Docker Image") {
+        // stage("Test Application"){
+        //     steps {
+        //         sh "mvn test"
+        //     }
+
+        // }
+        
+        stage("Sonarqube Analysis") {
             steps {
                 script {
-			sh 'docker build -t badrul11/demo11 .'
-                    // docker.withRegistry('',DOCKER_PASS) {
-                    //     docker_image = docker.build "${IMAGE_NAME}"
+                    withSonarQubeEnv(credentialsId: 'sonar') {
+                        sh "mvn sonar:sonar"
                     }
-
-                    // docker.withRegistry('',DOCKER_PASS) {
-                    //     docker_image.push("${IMAGE_TAG}")
-                    //     docker_image.push('latest')
-                   // }
                 }
             }
+
+        }
+
+        // stage("Build & Push Docker Image") {
+        //     steps {
+        //         script {
+		// 	sh 'docker build -t badrul11/demo11 .'
+        //             // docker.withRegistry('',DOCKER_PASS) {
+        //             //     docker_image = docker.build "${IMAGE_NAME}"
+        //             }
+
+        //             // docker.withRegistry('',DOCKER_PASS) {
+        //             //     docker_image.push("${IMAGE_TAG}")
+        //             //     docker_image.push('latest')
+        //            // }
+        //         }
+        //     }
 
         }
 
